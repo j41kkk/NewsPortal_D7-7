@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'bootstrap4',
     'django.contrib.sites',
     'django.contrib.flatpages',
@@ -36,12 +35,15 @@ INSTALLED_APPS = [
     'sign',
     'django_filters',
     'django_apscheduler',
-
-    'allauth',
+    'appointment',
+    'django.contrib.sites',
     'allauth.account',
     'allauth.socialaccount',
-
     'allauth.socialaccount.providers.google',
+    'appointment.apps.AppointmentConfig',
+    'django.contrib.sites',
+    'allauth',
+
 ]
 
 EMAIL_HOST_USER = "newsportal272@gmail.com"
@@ -75,6 +77,9 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
@@ -150,13 +155,20 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = '/account/login/'
 LOGIN_REDIRECT_URL = '/'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_PORT = 465
 EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
+EMAIL_USE_SSL = True
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+ADMINS = [
+    ('Skavik', 'skavik46111@gmail.com'),
+    # список всех админов в формате ('имя', 'их почта')
+]
+SERVER_EMAIL = 'peterbadson@yandex.ru'  # это будет у нас вместо аргумента FROM в массовой рассылке
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER # если вы используете Яндекс, то не забудьте добавить + ‘@yandex.ru’
